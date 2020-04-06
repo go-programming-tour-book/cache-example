@@ -33,7 +33,7 @@ func New(maxBytes int, onEvicted func(key string, value interface{})) cache.Cach
 	}
 }
 
-// Set 往 Cache 增加一个元素
+// Set 往 Cache 增加一个元素（如果已经存在，更新值，并增加权重，重新构建堆）
 func (l *lfu) Set(key string, value interface{}) {
 	if e, ok := l.cache[key]; ok {
 		l.usedBytes = l.usedBytes - cache.CalcLen(e.value) + cache.CalcLen(value)
